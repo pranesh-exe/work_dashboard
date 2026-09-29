@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head> 
+        <link rel="stylesheet" href="assets/css/style.css"/> 
+
+        <title>AUDIT LOG REPORT</title>
+        <style>
+            body{
+                font-size:10px;
+            }
+            table, th, td {
+                border-spacing: 0;
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            * {
+                box-sizing: border-box;
+            }
+
+            .container {
+                min-width: 100% !important;
+            }
+            .card-body {
+                -ms-flex: 1 1 auto;
+                flex: 1 1 auto;
+                padding: 1.25rem;
+            }
+            .row {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+
+            .card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 0px solid rgba(0, 0, 0, 0);
+                border-radius: .25rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+            }
+            @page{
+                @bottom-left {
+                    content: element(footerLeft);
+                    vertical-align: top;
+                    /*padding-top: 10px;*/
+                }
+            }
+            @page{
+                @top-left {
+                    content: element(headerLeft);
+                    vertical-align: bottom;
+                }
+            }
+            @page{
+                size: A4 landscape;
+                margin:1cm;
+            }
+            table.stripedtable tr:nth-child(even) {
+                background-color: #F3F3F0!important;
+            }
+            .p-l-5{
+                padding-left:5px!important;
+            }
+
+            #pagenumber:before {
+                content: counter(page);
+            }
+
+            #pagecount:before {
+                content: counter(pages);
+            }
+
+            .headerLeft{
+                display: block;
+                position: running(headerLeft);
+                font-size:8pt;
+                width: 100%;
+                margin-bottom: 0.5cm;
+            }
+            .no-border {
+                border-left: none !important;
+                border-right: none !important;
+            }
+        </style>
+    </head>  
+    <body>       
+        <div class="container">
+            <div class="card">
+                <div class="headerLeft" >            
+                    <p style="width:38%;float:right;text-align: right;">Page <span id="pagenumber"></span> of <span id="pagecount"></span></p> 
+                </div>
+                <div class="card-body" style="">
+                    <div class="" style="text-align:center;
+                         border-bottom: 2px solid #79838B;">
+                        <!--<h2>Denied Claims Report</h2>-->
+                    </div>
+                    <main>
+                        <div class="" style="margin-top:15px;">
+                            <div class="container">
+                                <table class="table-bordered stripedtable" style="width:100%;margin:0;padding:0px;"> 
+                                    <tr style="background-color: #D3D3D3 !important;">
+                                        <td class="no-border" colspan="" style="text-align: left; height:40px; border-left: none;">
+                                            <img  th:src="@{data:image/png;base64,{image}(image=${zenmedFullLogo})}"  width="60" height="40" alt="" />
+                                        </td>
+                                        <td class="no-border" colspan="" style="text-align: center; font-size:15px; font-weight: bold; height:40px; border-left: none; border-bottom: 2px solid #79838B;" >AUDIT LOG REPORT</td>
+                                    </tr>
+                                </table>
+
+                                <table class="table-bordered stripedtable" style="width:100%;margin:0;padding:0px;"> 
+                                    <thead>
+                                        <tr class="keep-together" style="background-color:#lightgrey!important;color:#000000!important;font-weight:bold;">
+                                            <th th:if="${visibleColumns.contains(1)}" style="width:8%">Log Id</th>
+                                            <th th:if="${visibleColumns.contains(2)}" style="width:12%">User Name</th>
+                                            <th th:if="${visibleColumns.contains(3)}" style="width:12%">Affected By</th>
+                                            <th th:if="${visibleColumns.contains(4)}" style="width:10%">User Type</th>
+                                            <th th:if="${visibleColumns.contains(5)}" style="width:12%">Log Type</th>
+                                            <th th:if="${visibleColumns.contains(6)}" style="width:12%">Performed By</th>
+                                            <th th:if="${visibleColumns.contains(7)}" style="width:12%">Log Time</th>
+                                            <th th:if="${visibleColumns.contains(8)}" style="width:10%">IP Address</th>
+                                            <th th:if="${visibleColumns.contains(9)}" style="width:12%">Browser Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="row : ${dataList}">
+                                            <td th:if="${visibleColumns.contains(1)}" class="p-l-5"><span th:text="${row.logId}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(2)}" class="p-l-5"><span th:text="${row.userName}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(3)}" class="p-l-5"><span th:text="${row.affectedUser}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(4)}" class="p-l-5"><span th:text="${row.userType}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(5)}" class="p-l-5"><span th:text="${row.auditLogType}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(6)}" class="p-l-5"><span th:text="${row.performedBy}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(7)}" class="p-l-5"><span th:text="${row.eventTime}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(8)}" class="p-l-5"><span th:text="${row.ipAddress}">test</span></td>
+                                            <td th:if="${visibleColumns.contains(9)}" class="p-l-5"><span th:text="${row.browserName}">test</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table-bordered stripedtable" style="width:100%;margin:0;padding:0px;">
+                                    <tr style="background-color: #D3D3D3 !important;">
+                                        <td class="no-border"  colspan="" style="text-align: left; height:20px;">Total Row Count: <span th:text="${#arrays.length(dataList)}"></span> </td>
+                                    </tr>
+                                </table>
+
+                                <table class="table-bordered stripedtable" style="width:100%;margin:0;padding:0px;">
+                                    <tr style="background-color: #D3D3D3 !important;">
+                                        <td class="no-border"  colspan="" style="text-align: left; height:20px;">Generated By <span th:text="${userName}"></span></td>
+                                        <td class="no-border"  colspan="" style="text-align: right; font-weight: bold; height:20px; ">  Generated On: <span th:text="${createdOn}"> </span></td>
+                                        <td class="no-border"  colspan="" style="text-align: right; font-weight: bold; height:20px; "></td>
+                                        <td class="no-border"  colspan="" style="text-align: right; font-weight: bold; height:20px; ">Confidential. For internal use only</td>
+                                    </tr>
+                                </table>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
